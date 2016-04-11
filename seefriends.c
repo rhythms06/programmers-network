@@ -50,6 +50,21 @@ int main(void)
   printf("</div>\n");
   printf("<div id=\"main-container\">\n");
 
+  //strlen for website usage, ! operand for terminal usage
+  if(!username || strlen(username) == 0) {
+
+    // username not usable. get outta here!
+    printf("You're not logged in!\n");
+    printf("<p><form action=\"../../~ascott40/cgi-bin/login.html\">\n");
+    printf("<button name=\"goback\">Register/Login</button>");
+    printf("</form></p>");
+    printf("</div>\n</body>\n</html>\n");
+
+  // else case for when there is a usable string in variable "username"
+  } else {
+
+  }
+
   /* it's a C program, what can I say? */
   return(0);
 
