@@ -21,6 +21,35 @@ int main(void)
   const char* testname = "brady";
   */
 
+  /* A bunch of printf's to print out html headers and css */
+  printf("Content-Type:text/html\r\n\r\n<html>\n<head>\n<title>See Friends</title>\n</head>\n");
+
+  printf("<style type=\"text/css\">\nhtml, body {\nmargin: 0px;\nheight: 100%;\nbackground-color: #111111;\ncolor: #dddddd;\n}\n");
+
+  printf("#header {\nposition: absolute;\ntop: 20px;\nleft: 5.6%;\nheight: 10%;\nwidth: 85%;\ncolor: #33ccff;\nfont-size: 40px;\n}\n");
+
+  printf("#main-container {\nposition: relative;\ntop: 100px;\nleft: 80px;\n};\n");
+
+  printf(".line {\ndisplay: block;\nmargin-top: 0.5em;\nmargin-bottom: 0.5em;\nmargin-left: auto;\nmargin-right: auto;\nborder-style: inset;\nborder-width: 1px;\n}\n");
+
+  printf("#topline {\nposition: relative;\nmargin-top: 0.1em;\nmargin-left: -4.6%;\nmargin-right: 8.5%;\n}\n");
+
+  printf(".profiles { display: none; }\n");
+
+  printf("</style>\n");
+
+  printf("<body>\n");
+
+  printf("<div id=\"header\">\n");
+  // pagetitle refuses to work :(
+  // printf("<div id=\"pagetitle\">\n");
+  printf("See a Friend");
+  // pagetitle div closer tag
+  // printf("</div>\n");
+  printf("<hr class=\"line\" id=\"topline\"></div>\n");
+  printf("</div>\n");
+  printf("<div id=\"main-container\">\n");
+
   /* it's a C program, what can I say? */
   return(0);
 
