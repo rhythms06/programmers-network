@@ -46,5 +46,41 @@ void getAllParams() {
 
 /* parse specific key into a variable name for later use */
 void getParam(const char *Name, char *Value) {
+  char *pos1 = strstr(InputData, Name);
+
+	if (pos1) {
+		pos1 += strlen(Name);
+
+		if (*pos1 == '=') { // Make sure there is an '=' where we expect it
+			pos1++;
+
+			while (*pos1 && *pos1 != '&') { // '&' signifies end of this parameter and the beginning of another
+
+				if (*pos1 == '%') {
+
+					// Convert it to a single ASCII character and store
+					*Value++ = (char)ToHex(pos1[1]) * 16 + ToHex(pos1[2]);
+					pos1 += 3;
+
+				} else if( *pos1=='+' ) {
+
+					// If it's a '+', store a space
+					*Value++ = ' ';
+					pos1++;
+
+				} else {
+
+					*Value++ = *pos1++; // Otherwise, just store the character
+				}
+
+			}
+
+			*Value++ = '\0';
+			return;
+		}
+	}
+
+	strcpy(Value, "undefined");	// If parameter not found, then use default parameter. Great for debugging.
+	return;
 
 }
