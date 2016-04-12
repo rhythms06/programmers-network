@@ -18,3 +18,14 @@ if len(sys.argv) > 1:
 else:
 	form = cgi.FieldStorage();
 	username = form.getvalue("username")
+
+# array of all users and respective full names in database
+users = [  ]
+
+# array of all lines in users.txt
+userlist = [ line.rstrip('\r\n') for line in open('../../../ascott40/public_html/users.txt') ]
+
+# add (username, full name) to users array for every user
+for i in range(0, len(userlist) - 3):
+	if ( i % 4 == 0 ):
+		users += [ (userlist[i], userlist[i+2]) ]
