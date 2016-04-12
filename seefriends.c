@@ -62,7 +62,134 @@ int main(void)
 
   // else case for when there is a usable string in variable "username"
   } else {
+    printf("<p>Your username is %s. The following is a list of your friends (if any) - click a username to expand a friend's profile!</p>\n", username);
 
+    // read friends.txt, parse each line, and use the line of the current user to populate the webpage.
+    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    fp = fopen("../friends.txt", "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+    while ((read = getline(&line, &len, fp)) != -1) {
+        char ** parsearray = NULL;
+        char * p = strtok (line, " ");
+        int n_spaces = 0, i;
+
+        /* split line and append its tokens to 'parsearray' */
+        while (p) {
+          parsearray = realloc (parsearray, sizeof (char*) * ++n_spaces);
+
+          if (parsearray == NULL)
+            exit (-1); /* exit if memory allocation failed */
+
+          parsearray[n_spaces-1] = p;
+
+          p = strtok (NULL, " ");
+        }
+
+        /* use tokens (friends) if first token (username) matches current user */
+        if ((strcmp(parsearray[0], username)) == 0) {
+          for (i = 1; i < (n_spaces); ++i) {
+
+            char *fullname;
+            char *profession;
+
+            int lines_allocated = 128;
+            int max_line_len = 100;
+
+            /* Allocate lines of text to parse users.txt into a array of char arrays 'words' */
+            char **words = (char **)malloc(sizeof(char*)*lines_allocated);
+            if (words==NULL)
+            {
+              fprintf(stderr,"Out of memory (1).\n");
+              exit(1);
+            }
+
+            FILE *fp = fopen("../../../ascott40/public_html/users.txt", "r");
+            if (fp == NULL)
+            {
+              fprintf(stderr,"Error opening file.\n");
+              exit(2);
+            }
+
+            /* max index of words is words[l] */
+            int l;
+            for (l=0;1;l++)
+            {
+              int j;
+
+              /* Have we gone over our line allocation? */
+              if (l >= lines_allocated)
+              {
+                int new_size;
+
+                /* Double our allocation and re-allocate */
+                new_size = lines_allocated*2;
+                words = (char **)realloc(words,sizeof(char*)*new_size);
+                if (words==NULL)
+                {
+                  fprintf(stderr,"Out of memory.\n");
+                  exit(3);
+                }
+                lines_allocated = new_size;
+              }
+              /* Allocate space for the next line */
+              words[l] = malloc(max_line_len);
+              if (words[l]==NULL)
+              {
+                fprintf(stderr,"Out of memory (3).\n");
+                exit(4);
+              }
+              if (fgets(words[l],max_line_len-1,fp)==NULL)
+              break;
+
+              /* Get rid of return or newline at end of line */
+              for (j=strlen(words[l])-1;j>=0 && (words[l][j]=='\n' || words[l][j]=='\r');j--)
+              ;
+              words[l][j+1]='\0';
+            }
+            /* Close users.txt. 'words' now contains all user info */
+            fclose(fp);
+
+            int j;
+
+            /* gather user info for profile iteration */
+            for(j = 0; j < l; j++) {
+              if ((strcmp(parsearray[i], words[j])) == 0) {
+                  fullname = words[j+2];
+                  profession = words[j+3];
+              }
+            }
+
+            /* a fix for the last iteration */
+            if (i == (n_spaces)-2) {
+              parsearray[i+1][strlen(parsearray[i+1])-1] = '\0';
+            }
+
+            /* we're done populating user profiles, so let's free up memory */
+            for (;l>=0;l--)
+            free(words[l]);
+            free(words);
+
+          }
+
+        }
+
+        /* free memory before parsing next line of friends.txt */
+        free (parsearray);
+    }
+
+    /* close friends.txt, we're done with it */
+    fclose(fp);
+
+    /* free line memory */
+    if (line) {
+      free(line);
+    }
   }
 
   /* it's a C program, what can I say? */
