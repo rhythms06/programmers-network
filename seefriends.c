@@ -220,6 +220,7 @@ int main(void)
 
     /* goodbye HTML. this was fun */
     printf("</body>\n</html>\n");
+
   }
 
   /* it's a C program, what can I say? */
@@ -229,7 +230,7 @@ int main(void)
 
 /* parse all recieved information */
 void getAllParams() {
-  // Determines if it is a POST or GET method
+	// Determines if it is a POST or GET method
 	if( getenv( "REQUEST_METHOD" ) == 0 ) {
 		printf("No REQUEST_METHOD, must be running in DOS mode\n");
 		return;
@@ -247,7 +248,7 @@ void getAllParams() {
 
 /* parse specific key into a variable name for later use */
 void getParam(const char *Name, char *Value) {
-  char *pos1 = strstr(InputData, Name);
+	char *pos1 = strstr(InputData, Name);
 
 	if (pos1) {
 		pos1 += strlen(Name);
