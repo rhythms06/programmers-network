@@ -198,6 +198,15 @@ int main(void)
       free(line);
     }
 
+    /* A button to return to the correct dashboard */
+    printf("<p><form action=\"../../~jinsco/cgi-bin/dashboard.py\" method=\"post\">\n");
+    printf("<button name=\"username\" value=\"%s\">Go Back to Dashboard</button>", username);
+    printf("</form></p>\n");
+
+    /* A little log out helper */
+    printf("<p>P.S. You're currently logged in as \"%s\". If that's not you,\n", username);
+    printf("<a href=\"http://cs.mcgill.ca/~ascott40\">click here</a> to logout.</p>\n</div>\n");
+
     /* A bunch of printf's to print out the script that toggles profile visibility upon username click */
     printf("<script type=\"text/javascript\">\n");
     printf("function toggle_visibility(id) {\n");
