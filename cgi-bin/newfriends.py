@@ -18,3 +18,22 @@ if len(sys.argv) > 1:
 else:
     form = cgi.FieldStorage();
     username = form.getvalue("username")
+
+# array of all lines in friends.txt
+friendlist = [ line.rstrip('\r\n') for line in open('../friends.txt') ]
+
+# the current user's line in friends.txt before friend requests
+oldfriendsline = [  ]
+oldfriendsline += [ username ]
+
+# the current user's friend list before friend requests
+oldfriends = [  ]
+
+# the user's friend requests
+friendreqs = [  ]
+
+# the current user's friend list after friend requests
+newfriends = [  ]
+
+# the current user's line in friends.txt after friend requests
+newfriendsline = [  ]
