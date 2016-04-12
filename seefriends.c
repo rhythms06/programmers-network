@@ -165,6 +165,13 @@ int main(void)
               }
             }
 
+            /* profile div's are hidden on load and are shown only when clicked */
+            printf("<p><a onclick=\"toggle_visibility('profile%d');\">%s</a></p>\n", i, parsearray[i]);
+            printf("\n<div class=\"profiles\" id=\"profile%d\">\n", i);
+            /* finally, populate full name and profession */
+            printf("<b>Full Name</b>: %s. <b>Profession</b>: %s.\n", fullname, profession);
+            printf("</div>\n");
+
             /* a fix for the last iteration */
             if (i == (n_spaces)-2) {
               parsearray[i+1][strlen(parsearray[i+1])-1] = '\0';
@@ -190,6 +197,20 @@ int main(void)
     if (line) {
       free(line);
     }
+
+    /* A bunch of printf's to print out the script that toggles profile visibility upon username click */
+    printf("<script type=\"text/javascript\">\n");
+    printf("function toggle_visibility(id) {\n");
+    printf("var e = document.getElementById(id);\n");
+    printf("if(e.style.display == 'block')\n");
+    printf("e.style.display = 'none';\n");
+    printf("else\n");
+    printf("e.style.display = 'block';\n");
+    printf("}\n");
+    printf("</script>\n");
+
+    /* goodbye HTML. this was fun */
+    printf("</body>\n</html>\n");
   }
 
   /* it's a C program, what can I say? */
