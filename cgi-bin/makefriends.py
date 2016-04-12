@@ -33,6 +33,13 @@ for i in range(0, len(userlist) - 3):
 # HTML for checkbox list of users
 userlisthtml = ""
 
+# "usernam" is spelled funny to avoid conflict with current username variable
+for (usernam, fullname) in users:
+	# don't list username if it's the person who's logged in!
+	# we have a strict don't-friend-yourself rule around here :P
+	if (usernam != username):
+		userlisthtml += "\t\t\t<input type=\"checkbox\" name=\"%s\" value=\"ADD\"> %s (%s)<br>\n" % (usernam, fullname, usernam)
+
 # a link to the dashboard. it's standalone because why not
 dashboardlink = "\"../../~jinsco/cgi-bin/dashboard.py\""
 
@@ -93,3 +100,49 @@ htmlheaders = """
 		</div>
 		<div id="main-container">
 """
+
+body = """
+		<p>
+		The following is a list of all the users in our database. Please choose who you'd like to add as friends (if any).
+		</p>
+
+		<form action="newfriends.py" method="get">
+			<p>
+""" + userlisthtml + """			</p>
+			<p>
+  			<button name="username" value="%s">Submit</button>
+			</p>
+		</form>
+		<form action=""" % username + dashboardlink + """ method="post">
+    			<button name="username" value="%s">Go Back to Dashboard</button>
+		</form>
+""" % username + """
+		<p>P.S. You're currently logged in as "%s". If that's not you,
+		<a href="http://cs.mcgill.ca/~ascott40">click here</a> to logout.</p>
+""" % username
+
+htmlfooters = """
+		</div>
+	</body>
+</html>
+"""
+
+
+# Now send the HTML page to the user's browser
+print "Content-Type:text/html;charset=utf-8"
+print
+if username:
+	print htmlheaders
+	print body
+	print htmlfooters
+if username == None:
+	print htmlheaders
+	print "You're not logged in!"
+	print """
+	<p>
+		<form action="../../~ascott40/login.html">
+			<button name="goback">Register/Login</button>
+		</form>
+	</p>
+	"""
+	print htmlfooters
