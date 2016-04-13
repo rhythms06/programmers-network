@@ -87,6 +87,9 @@ for token in newfriendsline:
 with open('../friends.txt', 'w') as file:
     file.writelines( data )
 
+# a link to the dashboard. it's standalone because why not
+dashboardlink = "\"../../~jinsco/cgi-bin/dashboard.py\""
+
 # HTML and CSS time.
 htmlheaders = """
 
@@ -144,3 +147,37 @@ htmlheaders = """
 		</div>
 		<div id="main-container">
 """
+
+# oldl = "<p>This is your old line:"
+oldf = "<p></p>Your old list of friends:"
+reqs = "</p><p>You requested to add the following users to your friends list:"
+newf = "</p><p>Your new list of friends:"
+# newl = "</p><p>This is your new line:"
+
+button = """</p>
+<form action=""" + dashboardlink + """ method="post">
+    			<button name="username" value="%s">Go Back to Dashboard</button>
+		</form>
+""" % username
+
+htmlfooters = """
+		</div>
+	</body>
+</html>
+"""
+
+print "Content-Type:text/html;charset=utf-8"
+print
+print htmlheaders
+# print oldl
+# print ', '.join(oldfriendsline) + '.'
+print oldf
+print ', '.join(oldfriends) + '.'
+print reqs
+print ', '.join(friendreqs) + '.'
+print newf
+print ', '.join(newfriends) + '.'
+print button
+# print newl
+# print ', '.join(newfriendsline) + '.'
+print htmlfooters
