@@ -63,3 +63,26 @@ newfriends = list(set(oldfriends) | set(friendreqs))
 # create the new line to go in friends.txt
 newfriendsline += [ username ]
 newfriendsline += newfriends
+
+# open up friends.txt...
+with open('../friends.txt', 'r') as file:
+    # read a list of lines into data
+    data = file.readlines()
+
+# update relevant line in friends.txt through data
+
+# add a line in friends.txt if current user doesn't have a line
+# else, update the old line
+if (n == -1):
+	data += ["\n"]
+	n = len(data) - 1
+else: data[n] = ""
+
+for token in newfriendsline:
+    data[n] += token
+    # add spaces in between usernames
+    if (token != newfriendsline[len(newfriendsline)-1]): data[n] += " "
+
+# ...and write everything back
+with open('../friends.txt', 'w') as file:
+    file.writelines( data )
