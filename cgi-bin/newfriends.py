@@ -37,3 +37,29 @@ newfriends = [  ]
 
 # the current user's line in friends.txt after friend requests
 newfriendsline = [  ]
+
+# counter for line in friendlist, and therefore friends.txt
+i = 0
+
+# will hold the current user's line number in friends.txt
+n = -1
+
+# find out where in friends.txt are the user's friends, and update variables as such
+for (user, friends) in [ ( entry.split(' ', 1) ) for entry in friendlist ]:
+    i = i + 1
+    if ( user == username ):
+        n = i - 1
+        oldfriendsline += friends.split()
+        oldfriends += friends.split()
+        break
+
+# populate friendreqs based on information given from makefriends.py. ignore current user's key.
+for key in form.keys():
+    if (key != "username"): friendreqs += [key]
+
+# merge the old friend list with the friend requests. note that this method does not allow a user to undo any friend requests.
+newfriends = list(set(oldfriends) | set(friendreqs))
+
+# create the new line to go in friends.txt
+newfriendsline += [ username ]
+newfriendsline += newfriends
