@@ -86,3 +86,61 @@ for token in newfriendsline:
 # ...and write everything back
 with open('../friends.txt', 'w') as file:
     file.writelines( data )
+
+# HTML and CSS time.
+htmlheaders = """
+
+<html>
+	<head>
+		<title>Confirmation</title>
+	</head>
+
+	<style type="text/css">
+		html, body {
+			margin: 0px;
+			height: 100%;
+			background-color: #111111;
+			color: #dddddd;
+		}
+		#header {
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			height: 10%;
+			width: 85%;
+			color: #33ccff;
+		}
+		#main-container {
+			position: relative;
+			top: 100px;
+			left: 80px;
+		}
+		#pagetitle {
+			position: relative;
+			top: 20px;
+			left: 80px;
+			font-size: 40px;
+		}
+		.line {
+			display: block;
+			margin-top: 0.5em;
+			margin-bottom: 0.5em;
+			margin-left: auto;
+			margin-right: auto;
+			border-style: inset;
+			border-width: 1px;
+		}
+		#topline {
+			position: relative;
+			margin-top: 1.5em;
+			margin-left: 2%;
+			margin-right: 2%;
+		}
+	</style>
+	<body>
+		<div id="header">
+			<div id="pagetitle">Congrats on your new friend list!</div>
+			<hr class="line" id="topline"></div>
+		</div>
+		<div id="main-container">
+"""
