@@ -15,6 +15,7 @@ import sys
 # Get the username that was submitted via CGI or via command-line
 if len(sys.argv) > 1:
     username = sys.argv[1]
+    form = None
 else:
     form = cgi.FieldStorage();
     username = form.getvalue("username")
@@ -54,8 +55,19 @@ for (user, friends) in [ ( entry.split(' ', 1) ) for entry in friendlist ]:
         break
 
 # populate friendreqs based on information given from makefriends.py. ignore current user's key.
-for key in form.keys():
-    if (key != "username"): friendreqs += [key]
+if form is None:
+    error = "Note: cgi.FieldStorage() could not be accessed. You're probably running this through a terminal :)"
+elif form:
+    error = None
+    for key in form.keys():
+        if (key != "username"): friendreqs += [key]
+else:
+    print """
+    Something's gone awry.
+    Are you in terminal? We don't handle friend requests in terminal.
+    You can pass a username as an argument as a test, but if you really
+    want to add friends, head to the internets :)
+    """
 
 # merge the old friend list with the friend requests. note that this method does not allow a user to undo any friend requests.
 newfriends = list(set(oldfriends) | set(friendreqs))
@@ -79,9 +91,13 @@ if (n == -1):
 else: data[n] = ""
 
 for token in newfriendsline:
-    data[n] += token
-    # add spaces in between usernames
-    if (token != newfriendsline[len(newfriendsline)-1]): data[n] += " "
+    if token is None:
+        error = "newfriendsline could not be used. You're probably running this through a terminal :)"
+        exit()
+    elif token:
+        data[n] += token
+        # add spaces in between usernames
+        if (token != newfriendsline[len(newfriendsline)-1]): data[n] += " "
 
 # ...and write everything back
 with open('../friends.txt', 'w') as file:
@@ -169,6 +185,7 @@ htmlfooters = """
 print "Content-Type:text/html;charset=utf-8"
 print
 print htmlheaders
+if error is not None: print error
 # print oldl
 # print ', '.join(oldfriendsline) + '.'
 print oldf
