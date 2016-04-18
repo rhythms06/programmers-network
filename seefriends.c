@@ -172,11 +172,6 @@ int main(void)
             printf("<b>Full Name</b>: %s. <b>Profession</b>: %s.\n", fullname, profession);
             printf("</div>\n");
 
-            /* a fix for the last iteration */
-            if (i == (n_spaces)-2) {
-              parsearray[i+1][strlen(parsearray[i+1])-1] = '\0';
-            }
-
             /* we're done populating user profiles, so let's free up memory */
             for (;l>=0;l--)
             free(words[l]);
